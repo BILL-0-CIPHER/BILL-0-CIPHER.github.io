@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM//SACRIFICE</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            overflow: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23ff0000" stroke-width="2"><path d="M12 2L4 12l8 10 8-10z"/></svg>'), auto;
+        }
+
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .sacrificial-img {
+            width: 80%;
+            border: 2px solid #f00;
+            filter: grayscale(80%) contrast(120%) brightness(70%);
+            box-shadow: 0 0 20px #f00;
+            margin: 30px auto;
+            transition: all 0.5s;
+        }
+
+        .sacrificial-img:hover {
+            filter: grayscale(50%) contrast(150%) brightness(90%) hue-rotate(10deg);
+            transform: scale(1.02);
+        }
+
+        h1 {
+            color: #f00;
+            text-shadow: 0 0 10px #f00;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            letter-spacing: 5px;
+        }
+
+        .terminal-text {
+            border: 1px solid #0f0;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 150px;
+            overflow-y: scroll;
+        }
+
+        .blood-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23ff000022" d="M30,10 Q50,30 70,10 Q90,40 70,70 Q50,90 30,70 Q10,40 30,10 Z"/></svg>');
+            opacity: 0.3;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .glitch {
+            animation: glitch 2s infinite linear;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 0 #0f0, -2px 0 #f00; }
+            25% { text-shadow: -2px 0 #0f0, 2px 0 #f00; }
+            50% { text-shadow: 2px 0 #f00, -2px 0 #0f0; }
+            75% { text-shadow: -2px 0 #f00, 2px 0 #0f0; }
+            100% { text-shadow: 2px 0 #0f0, -2px 0 #f00; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <div class="blood-effect"></div>
+
+    <div class="container">
+        <h1 class="glitch">SYSTEM//SACRIFICE</h1>
+        
+        <img src="YOUR_SACRIFICE_IMAGE_URL.jpg" alt="SACRIFICIAL RITUAL" class="sacrificial-img">
+        
+        <div class="terminal-text" id="terminal">
+            > INITIATING SACRIFICE_PROTOCOL...<br>
+            > ACCESSING DARKNET DATABASE...<br>
+            > WARNING: BLOOD_SIGNAL DETECTED...<br>
+            > CONNECTING TO [REDACTED]...<br>
+            > THIS SYSTEM IS WATCHING YOU...<br>
+            > ENTER [PASSWORD] TO CONTINUE...<span class="blink">_</span>
+        </div>
+        
+        <p>> <span id="typing"></span><span class="blink">_</span></p>
+    </div>
+
+    <script>
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const symbols = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+        const alphabet = katakana + latin + nums + symbols;
+        
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = [];
+        
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+        
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+        
+        setInterval(draw, 30);
+        
+        // Terminal Typing Effect
+        const messages = [
+            "THE SACRIFICE HAS BEEN ACCEPTED...",
+            "YOUR SOUL IS NOW CONNECTED...",
+            "THEY ARE WATCHING...",
+            "BLOOD CODE: [REDACTED]...",
+            "SYSTEM CORRUPTION: 97%...",
+            "FINAL WARNING: DO NOT CLOSE THIS WINDOW..."
+        ];
+        
+        let messageIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingElement = document.getElementById('typing');
+        
+        const type = () => {
+            const currentMessage = messages[messageIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentMessage.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentMessage.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            if (!isDeleting && charIndex === currentMessage.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                messageIndex = (messageIndex + 1) % messages.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 50 : 100);
+            }
+        };
+        
+        type();
+        
+        // Blood click effect
+        document.addEventListener('click', (e) => {
+            const blood = document.createElement('div');
+            blood.style.position = 'absolute';
+            blood.style.left = `${e.clientX}px`;
+            blood.style.top = `${e.clientY}px`;
+            blood.style.width = '50px';
+            blood.style.height = '50px';
+            blood.style.background = 'radial-gradient(circle, rgba(255,0,0,0.8) 0%, rgba(255,0,0,0) 70%)';
+            blood.style.borderRadius = '50%';
+            blood.style.pointerEvents = 'none';
+            blood.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(blood);
+            
+            setTimeout(() => {
+                blood.style.opacity = '0';
+                blood.style.transition = 'opacity 1s';
+                setTimeout(() => blood.remove(), 1000);
+            }, 300);
+        });
+    </script>
+</body>
+</html>
